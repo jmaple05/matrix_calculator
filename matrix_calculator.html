@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Matrix Calculator</title>
+    </head>
+    <style>
+        .textbox {
+            padding: 10px;
+            border: 1px solid black;
+            border-radius: 8px;
+            font-size: 16px;
+            width: 250px;
+        }
+        .textbox:focus {
+            border-color: darkblue;
+            outline: none;
+            box-shadow: 0 0 5px gray;
+        }
+    </style>
+
+    <div id="container">
+        <input class="textbox" type="text" placeholder="Index 1">
+        <input class="textbox" type="text" placeholder="Index 2">
+    </div>
+
+    <script>
+        const container = document.getElementById("container");
+        let inputs = [];
+
+        function add_box() {
+            const input = document.createElement("index");
+            input.type = "text";
+
+            container.appendChild(input);
+            inputs.push(input);
+        }
+    </script>
+
+</html>
