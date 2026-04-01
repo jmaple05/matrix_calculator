@@ -5,36 +5,174 @@
         <title>Matrix Calculator</title>
     </head>
     <style>
-        .textbox {
-            padding: 10px;
-            border: 1px solid black;
-            border-radius: 8px;
+
+        :root {
+            --background-color: #b0b6b6;
+            --accent-color: #7a6b1d;
+
+        }
+
+        body {
+            background-color: var(--background-color);
+            font-family: Arial, sans-serif;
+            text-align: center;
+            align-items: center;
+            padding: 0 20px;
+            color: #000000;
+        }
+
+        matrix {
+            margin-top: 10px;
+            align-content: center;
+            display: flex;
+        }
+
+        .madeMatrices {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        input {
+            width: 50px;
+            margin: 3px;
+            text-align: center;
+        }
+
+        #input {
             font-size: 16px;
-            width: 250px;
         }
-        .textbox:focus {
-            border-color: darkblue;
-            outline: none;
-            box-shadow: 0 0 5px gray;
+
+        button {
+            margin-top: 10px;
         }
+
+        h2 {
+            font-size: 64px;
+            color: var(--accent-color);
+            margin-bottom: 32px;
+        }
+
     </style>
 
-    <div id="container">
-        <input class="textbox" type="text" placeholder="Index 1">
-        <input class="textbox" type="text" placeholder="Index 2">
-    </div>
+    <body>
+        <h2>Matrix Calculator</h2>
+        Rows: <input type="number" id="rows" value="2" min="1">
+        Cols: <input type="number" id="cols" value="2" min="1">
+        <br>
 
-    <script>
-        const container = document.getElementById("container");
-        let inputs = [];
+        <button onclick="createMatrix('matrixA', document.getElementById('rows').value, document.getElementById('cols').value)">
+            Create First Matrix</button>
+        <button onclick="createMatrix('matrixB', document.getElementById('rows').value, document.getElementById('cols').value)">
+            Create Second Matrix</button>
 
-        function add_box() {
-            const input = document.createElement("index");
-            input.type = "text";
+        <div class="madeMatrices">
+            <div id="matrixA" class="matrix"></div>
 
-            container.appendChild(input);
-            inputs.push(input);
-        }
-    </script>
+            <div id="matrixB" class="matrix"></div>
+        </div>
 
+        <button onclick="addMatrices()">+</button>
+
+
+        <script>
+            let matrixAInputs = [];
+            let matrixBInputs = [];
+
+            function createMatrix(containerId, rows, cols) {
+                const container = document.getElementById(containerId);
+                container.innerHTML = "";
+
+                let matrix = [];
+
+                for (let i = 0; i < rows; i++) {
+                    matrix[i] = [];
+
+                    for (let j = 0; j < cols; j++) {
+                        const input = document.createElement("input");
+                        input.type = "number";
+                        input.placeholder = `a${i}${j}`
+                        input.id = "input"
+                        input.style.width = "50px";
+
+                        matrix[i][j] = input;
+                        container.appendChild(input);
+                    }
+
+                    container.appendChild(document.createElement("br"));
+                }
+                return matrix;
+            }
+            function setUpMatrices() {
+                const cols = 2;
+                const rows = 2;
+
+                matrixAInputs = createMatrix("matrixA", rows, cols);
+                matrixBInputs = createMatrix("matrixB", rows, cols);
+            }
+            function getMatrixValues(matrixInputs) {
+                return matrixInputs.map(row => row.map(input => Number(input.value)));
+            }
+            function printMatrix() {
+                console.log(getMatrixValues());
+            }
+            function addMatrices(A, B) {
+
+            }
+
+        </script>
+        <script src="matrix.js">
+            Module.onRuntimeInitialized = () => {
+
+                setUpMatrices();
+
+                const multiply = Module.cwrap(
+                    "multiply",
+                    "number",
+                    ["number", "number", "number"]
+                );
+
+                function multiplyMatrices (A, B, n) {
+
+                    const size = n * n * 8;
+
+                    const ptrA = Module._malloc(size);
+                    const ptrB = Module._malloc(size);
+
+                    Module.HEAPF64.set(A, ptrA / 8);
+                    Module.HEAPF64.set(B, ptrB / 8);
+
+                    const resultPtr = multiply(ptrA, ptrB, n);
+
+                    const result = new Float64Array(
+                        Module.HEAPF64.buffer,
+                        resultPtr,
+                        n * n
+                    );
+
+                    const output = Array.from(result);
+
+                    Module._free(ptrA);
+                    Module._free(ptrB);
+
+                    return output;
+                }
+
+                let A = [1,2,3,4];
+                let B = [5,6,7,8];
+
+                console.log(multiplyMatrices(A, B, 2));
+            }
+
+            function handleMultiply() {
+                const A = getMatrixValues(matrixAInputs).flat();
+                const B = getMatrixValues(matrixBInputs).flat();
+
+                const result = multiplyMatrices(A, B, n);
+
+                displayMatrix(result);
+            }
+        </script>
+
+    </body>
 </html>
