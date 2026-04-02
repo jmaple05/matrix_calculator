@@ -31,6 +31,8 @@
             display: flex;
             gap: 20px;
             justify-content: center;
+            align-items: center;
+            margin-top: 30px;
         }
 
         input {
@@ -53,6 +55,15 @@
             margin-bottom: 32px;
         }
 
+        .operator {
+            font-size: 32px;
+        }
+
+        .operatorButtons {
+            font-size: 40px;
+            margin: 0;
+        }
+
     </style>
 
     <body>
@@ -68,13 +79,24 @@
 
         <div class="madeMatrices">
             <div id="matrixA" class="matrix"></div>
-
+            <div id="operator"></div>
             <div id="matrixB" class="matrix"></div>
         </div>
 
-        <button onclick="addMatrices()">+</button>
+        <div class="operatorButtons">
+            <button onclick="setOperator('+')">+</button>
+            <button onclick="setOperator('-')">-</button>
+            <button onclick="setOperator('X')">X</button>
+        </div>
+
+        <div class="calculate">
+            <button onclick="calculate()">Calculate</button>
+        </div>
+
+        <div id="result"></div>
 
 
+        <script src="matrix.js"></script>
         <script>
             let matrixAInputs = [];
             let matrixBInputs = [];
@@ -116,12 +138,43 @@
             function printMatrix() {
                 console.log(getMatrixValues());
             }
-            function addMatrices(A, B) {
-
+            let currentOperator = "+";
+            function setOperator(oper) {
+                currentOperator = oper;
+                document.getElementById("operator").textContent = oper;
             }
+            function addMatrices(A, B) {
+                return A.map((row, i) =>
+                    row.map((val, j) => val + B[i][j])
+                );
+            }
+            function calculate() {
+                const A = getMatrixValues(matrixAInputs);
+                const B = getMatrixValues(matrixBInputs);
 
-        </script>
-        <script src="matrix.js">
+                let result;
+
+                if (currentOperator === "+") {
+                    result = addMatrices(A, B);
+                }
+                result = addMatrices(A, B);
+
+                displayMatrix(result);
+            }
+            function displayMatrix(matrix) {
+                const container = document.getElementById("result");
+                container.innerHTML = "";
+
+                matrix.forEach(row => {
+                    row.forEach(val => {
+                        const span = document.createElement("span");
+                        span.textContent = val.toFixed(2);
+                        span.style.margin = "10px";
+                        container.appendChild(span);
+                    });
+                    container.appendChild(document.createElement("br"))
+                });
+            }
             Module.onRuntimeInitialized = () => {
 
                 setUpMatrices();
