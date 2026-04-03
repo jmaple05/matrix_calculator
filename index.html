@@ -100,6 +100,7 @@
         <script>
             let matrixAInputs = [];
             let matrixBInputs = [];
+            let currentOperator = "+";
 
             function createMatrix(containerId, rows, cols) {
                 const container = document.getElementById(containerId);
@@ -126,8 +127,8 @@
                 return matrix;
             }
             function setUpMatrices() {
-                const cols = 2;
-                const rows = 2;
+                const rows = document.getElementById('rows').value;
+                const cols = document.getElementById('cols').value;
 
                 matrixAInputs = createMatrix("matrixA", rows, cols);
                 matrixBInputs = createMatrix("matrixB", rows, cols);
@@ -138,7 +139,6 @@
             function printMatrix() {
                 console.log(getMatrixValues());
             }
-            let currentOperator = "+";
             function setOperator(oper) {
                 currentOperator = oper;
                 document.getElementById("operator").textContent = oper;
@@ -148,16 +148,38 @@
                     row.map((val, j) => val + B[i][j])
                 );
             }
+            function subtractMatrices(A, B) {
+                return A.map((row, i) =>
+                    row.map((val, j) => val - B[i][j])
+                );
+            }
+            function multiplyMatrices(A, B) {
+                let result = [];
+                for (let i = 0; i < A.length; i++) {
+                    result.push([]);
+                    for (let j = 0; j < A[i].length; j++) {
+                        let num = 0;
+                        for (let k = 0; k < B.length; k++) {
+                            num += (A[i][k] * B[k][j]);
+                        }
+                        result[i].push(num);
+                    }
+                }
+                return result;
+            }
             function calculate() {
                 const A = getMatrixValues(matrixAInputs);
                 const B = getMatrixValues(matrixBInputs);
 
                 let result;
 
-                if (currentOperator === "+") {
+                if (currentOperator == "+") {
                     result = addMatrices(A, B);
+                } else if (currentOperator == "-") {
+                    result = subtractMatrices(A, B);
+                } else if (currentOperator == "X") {
+                    result = multiplyMatrices(A, B);
                 }
-                result = addMatrices(A, B);
 
                 displayMatrix(result);
             }
@@ -184,46 +206,6 @@
                     "number",
                     ["number", "number", "number"]
                 );
-
-                function multiplyMatrices (A, B, n) {
-
-                    const size = n * n * 8;
-
-                    const ptrA = Module._malloc(size);
-                    const ptrB = Module._malloc(size);
-
-                    Module.HEAPF64.set(A, ptrA / 8);
-                    Module.HEAPF64.set(B, ptrB / 8);
-
-                    const resultPtr = multiply(ptrA, ptrB, n);
-
-                    const result = new Float64Array(
-                        Module.HEAPF64.buffer,
-                        resultPtr,
-                        n * n
-                    );
-
-                    const output = Array.from(result);
-
-                    Module._free(ptrA);
-                    Module._free(ptrB);
-
-                    return output;
-                }
-
-                let A = [1,2,3,4];
-                let B = [5,6,7,8];
-
-                console.log(multiplyMatrices(A, B, 2));
-            }
-
-            function handleMultiply() {
-                const A = getMatrixValues(matrixAInputs).flat();
-                const B = getMatrixValues(matrixBInputs).flat();
-
-                const result = multiplyMatrices(A, B, n);
-
-                displayMatrix(result);
             }
         </script>
 
