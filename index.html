@@ -64,6 +64,10 @@
             margin: 0;
         }
 
+        .result {
+            margin-top: 10px;
+        }
+
     </style>
 
     <body>
@@ -72,9 +76,9 @@
         Cols: <input type="number" id="cols" value="2" min="1">
         <br>
 
-        <button onclick="createMatrix('matrixA', document.getElementById('rows').value, document.getElementById('cols').value)">
+        <button onclick="matrixAInputs = createMatrix('matrixA', document.getElementById('rows').value, document.getElementById('cols').value)">
             Create First Matrix</button>
-        <button onclick="createMatrix('matrixB', document.getElementById('rows').value, document.getElementById('cols').value)">
+        <button onclick="matrixBInputs = createMatrix('matrixB', document.getElementById('rows').value, document.getElementById('cols').value)">
             Create Second Matrix</button>
 
         <div class="madeMatrices">
@@ -93,8 +97,13 @@
             <button onclick="calculate()">Calculate</button>
         </div>
 
-        <div id="result"></div>
-
+        <math class="result">
+            <mrow>
+                <mo>[</mo>
+                <mtable id="result" rowspacing="1em"></mtable>
+                <mo>]</mo>
+            </mrow>
+        </math>
 
         <script src="matrix.js"></script>
         <script>
@@ -188,24 +197,15 @@
                 container.innerHTML = "";
 
                 matrix.forEach(row => {
+                    container.appendChild(document.createElement("mtr"));
                     row.forEach(val => {
-                        const span = document.createElement("span");
-                        span.textContent = val.toFixed(2);
-                        span.style.margin = "10px";
-                        container.appendChild(span);
+                        const elem = document.createElement("mtd");
+                        elem.textContent = val.toFixed(2);
+                        elem.style.margin = "10px";
+                        container.appendChild(elem);
                     });
                     container.appendChild(document.createElement("br"))
                 });
-            }
-            Module.onRuntimeInitialized = () => {
-
-                setUpMatrices();
-
-                const multiply = Module.cwrap(
-                    "multiply",
-                    "number",
-                    ["number", "number", "number"]
-                );
             }
         </script>
 
