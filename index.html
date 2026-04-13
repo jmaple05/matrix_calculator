@@ -3,81 +3,9 @@
     <head>
         <meta charset="UTF-8">
         <title>Matrix Calculator</title>
+
+        <link rel="stylesheet" type="text/css" href="style.css">
     </head>
-    <style>
-
-        :root {
-            --background-color: #b0b6b6;
-            --accent-color: #7a6b1d;
-        }
-
-        body {
-            background-color: var(--background-color);
-            font-family: Arial, sans-serif;
-            text-align: center;
-            align-items: center;
-            padding: 0 20px;
-            color: #000000;
-        }
-
-        matrix {
-            margin-top: 10px;
-            align-content: center;
-            display: flex;
-        }
-
-        .madeMatrices {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            align-items: center;
-            margin-top: 30px;
-        }
-
-        input {
-            width: 50px;
-            margin: 3px;
-            text-align: center;
-        }
-
-        #input {
-            font-size: 16px;
-        }
-
-        button {
-            margin-top: 10px;
-        }
-
-        h2 {
-            font-size: 64px;
-            color: var(--accent-color);
-            margin-bottom: 32px;
-        }
-
-        .operator {
-            font-size: 32px;
-        }
-
-        .operatorButtons {
-            font-size: 40px;
-            margin: 0;
-        }
-
-        .result {
-            margin-top: 10px;
-        }
-
-        .tabContent {
-            display: none;
-            margin-top: 20px;
-        }
-
-        .tabs button {
-            margin: 10px;
-            font-size: 18px;
-        }
-
-    </style>
 
     <body>
         <h2>Matrix Calculator</h2>
@@ -89,7 +17,6 @@
 
         Rows: <input type="number" id="rows" value="2" min="1">
         Cols: <input type="number" id="cols" value="2" min="1">
-        <br>
 
         <div id="singleTab" class="tabContent">
             <button onclick="singleMatrixInputs = createMatrix('matrix', document.getElementById('rows').value, document.getElementById('cols').value)">
@@ -99,6 +26,7 @@
 
             <div class="operatorButtons">
                 <button onclick="displayResult(determinant(getMatrixValues(singleMatrixInputs)))">Determinant</button>
+                <button onclick="displayResult(trace(getMatrixValues(singleMatrixInputs)))">Trace</button>
             </div>
 
             <div id="singleResult"></div>
@@ -226,6 +154,13 @@
                 } else {
                     return matrix[0][0]*matrix[1][1] - matrix[1][0]*matrix[0][1];
                 }
+            }
+            function trace(matrix) {
+                let trace = 0;
+                for (let i = 0; i < matrix.length; i++) {
+                    trace += matrix[i][i];
+                }
+                return trace;
             }
             function calculate() {
                 const A = getMatrixValues(matrixAInputs);
