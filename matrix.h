@@ -6,9 +6,14 @@
 #include <vector>
 using std::vector;
 #include <iostream>
-using std::cin, std::cout, std::endl, std::getline, std::cerr;
+using std::cin;
+using std::cout;
+using std::endl;
+using std::getline;
+using std::cerr;
 #include <string>
-using std::string, std::stoi;
+using std::string;
+using std::stoi;
 #include <ostream>
 using std::ostream;
 
