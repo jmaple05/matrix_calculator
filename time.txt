@@ -1,0 +1,32 @@
+02/04/26    17:00-18:00 + 20:10-21:30   2hr 20min
+    Build Matrix class (constructors, operator overloaders)
+02/05/26    18:45-20:00     1hr 15min
+    Implement transpose()
+    implement pow() and copy()
+    implement another * operation
+02/09/26    12:30-12:45     15min
+    implement tr() trace
+    clean up other methods
+//02/10/26    10:10-10:40     30min
+//    try to figure out more about android studio to build the matrix app
+//02/20/26    18:15-18:45	    30min
+//    put cpp files into my matrix calculator app in android studio
+03/01/26    11:00-11:15     15min
+    figure out text fields
+03/10/26    19:30-21:45	    2hr 15min
+    build much of the matrix ui, with text boxes, buttons, and operators
+03/11/26    22:15-23:45     1hr 30min
+    build data transferring from kotlin to c++
+    ui updating to display numbers and matrix operation result (to be updated still)
+03/26/26    19:30-21:00     1hr 30min
+    implement a new Matrix constructor
+    implement determinant() for all n x n matrices
+03/30/26    22:30-01:00     2hr 30min
+    trying to make a good ui in html for the calc
+    connecting c++ to javascript with emscripten
+    learning about emscripten
+04/09/26    19:00-21:00     2hr
+    make two tabs for single matrix operations and double matrix operations
+    implement determinant in JS for single matrices
+    fix up the styling associated with these tabs
+    commit everything to my git repo
