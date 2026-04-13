@@ -1,0 +1,148 @@
+let singleMatrixInputs = [];
+let matrixAInputs = [];
+let matrixBInputs = [];
+let currentOperator = "+";
+function createMatrix(containerId, rows, cols) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = "";
+
+    let matrix = [];
+
+    for (let i = 0; i < rows; i++) {
+        matrix[i] = [];
+
+        for (let j = 0; j < cols; j++) {
+            const input = document.createElement("input");
+            input.type = "number";
+            input.placeholder = `a${i}${j}`;
+            input.id = "input";
+            input.style.width = "50px";
+
+            matrix[i][j] = input;
+            container.appendChild(input);
+        }
+
+        container.appendChild(document.createElement("br"));
+    }
+    return matrix;
+}
+function setUpMatrices() {
+    const rows = document.getElementById('rows').value;
+    const cols = document.getElementById('cols').value;
+
+    matrixAInputs = createMatrix("matrixA", rows, cols);
+    matrixBInputs = createMatrix("matrixB", rows, cols);
+}
+function getMatrixValues(matrixInputs) {
+    return matrixInputs.map(row => row.map(input => Number(input.value)));
+}
+function printMatrix() {
+    console.log(getMatrixValues());
+}
+function setOperator(oper) {
+    currentOperator = oper;
+    document.getElementById("operator").textContent = oper;
+}
+function addMatrices(A, B) {
+    return A.map((row, i) =>
+        row.map((val, j) => val + B[i][j])
+    );
+}
+function subtractMatrices(A, B) {
+    return A.map((row, i) =>
+        row.map((val, j) => val - B[i][j])
+    );
+}
+function multiplyMatrices(A, B) {
+    let result = [];
+    for (let i = 0; i < A.length; i++) {
+        result.push([]);
+        for (let j = 0; j < B[0].length; j++) {
+            let num = 0;
+            for (let k = 0; k < B.length; k++) {
+                num += (A[i][k] * B[k][j]);
+            }
+            result[i].push(num);
+        }
+    }
+    return result;
+}
+function determinant(matrix) {
+    if (matrix.length > 2) {
+        let matrixDeterminant = 0;
+        let colNum = matrix.length;
+        for (let i = 0; i < colNum; i++) { // each elem across row 1
+            let arr = [];
+            for (let j = 1; j < colNum; j++) { // each row
+                arr.push([]);
+                for (let k = 0; k < colNum; k++) { // each col elem
+                    if (k !== i) { arr[j].push(matrix[j][k]); } // skips the correct column
+                }
+            }
+            let sign = 1;
+            if (i%2 === 1) { sign *= -1; }
+            matrixDeterminant += sign*matrix[0][i]*determinant(arr);
+        }
+        return matrixDeterminant;
+    } else {
+        return matrix[0][0]*matrix[1][1] - matrix[1][0]*matrix[0][1];
+    }
+}
+function trace(matrix) {
+    let trace = 0;
+    for (let i = 0; i < matrix.length; i++) {
+        trace += matrix[i][i];
+    }
+    return trace;
+}
+function calculate() {
+    const A = getMatrixValues(matrixAInputs);
+    const B = getMatrixValues(matrixBInputs);
+    let result;
+
+    if (currentOperator == "+") {
+        result = addMatrices(A, B);
+    } else if (currentOperator == "-") {
+        result = subtractMatrices(A, B);
+    } else if (currentOperator == "X") {
+        result = multiplyMatrices(A, B);
+    }
+    displayMatrix(result);
+}
+function displayMatrix(matrix) {
+    const container = document.getElementById("doubleResult");
+    container.innerHTML = "";
+
+    matrix.forEach(row => {
+        let mtr = document.createElement("mtr");
+        row.forEach(val => {
+            const mtd = document.createElement("mtd");
+            mtd.textContent = val.toFixed(2);
+            mtd.style.margin = "10px";
+            mtr.appendChild(mtd);
+        });
+        container.appendChild(mtr);
+        container.appendChild(document.createElement("br"));
+    });
+}
+function displayResult(result) {
+    const container = document.getElementById("singleResult");
+    container.innerHTML = "";
+    const span = document.createElement("span");
+    span.textContent = result.toFixed(2);
+    span.style.margin = "15px";
+    container.appendChild(span);
+}
+function showTab(tab) {
+    document.getElementById("singleTab").style.display = "none";
+    document.getElementById("doubleTab").style.display = "none";
+
+    if (tab == "single") {
+        document.getElementById("singleTab").style.display = "block";
+    } else {
+        document.getElementById("doubleTab").style.display = "block";
+    }
+}
+Module.onRuntimeInitialized = () => {
+    showTab('single');
+}
