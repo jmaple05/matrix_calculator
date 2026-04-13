@@ -30,3 +30,9 @@
     implement determinant in JS for single matrices
     fix up the styling associated with these tabs
     commit everything to my git repo
+04/12/26    18:00-19:15     1hr 15min
+    set up github and connect directly my folders in vscode to my reposi-
+    tory in Github.
+    Separate the html, css, and javascript into different files
+    style.css and script.js
+    
