@@ -1,0 +1,74 @@
+:root {
+    --background-color: #b0b6b6;
+    --accent-color: #7a6b1d;
+}
+
+body {
+    background-color: var(--background-color);
+    font-family: Arial, sans-serif;
+    text-align: center;
+    align-items: center;
+    padding: 0 20px;
+    color: #000000;
+}
+
+matrix {
+    margin-top: 10px;
+    align-content: center;
+    display: flex;
+}
+
+.madeMatrices {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.matrix {
+    display: block;
+}
+
+input {
+    width: 50px;
+    margin: 3px;
+    text-align: center;
+}
+
+#input {
+    font-size: 16px;
+}
+
+button {
+    margin-top: 10px;
+}
+
+h2 {
+    font-size: 64px;
+    color: var(--accent-color);
+    margin-bottom: 32px;
+}
+
+.operator {
+    font-size: 32px;
+}
+
+.operatorButtons {
+    font-size: 40px;
+    margin: 0;
+}
+
+.result {
+    margin-top: 10px;
+}
+
+.tabContent {
+    display: none;
+    margin-top: 10px;
+}
+
+.tabs button {
+    margin: 10px;
+    font-size: 18px;
+}
