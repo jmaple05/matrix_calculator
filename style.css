@@ -1,33 +1,69 @@
 :root {
     --background-color: #b0b6b6;
     --accent-color: #7a6b1d;
+
+    --spacing-xs: 8px;
+    --spacing-sm: 13px;
+    --spacing-md: 21px;
+    --spacing-lg: 34px;
+
+    --font-xs: 10px;
+    --font-sm: 16px;
+    --font-md: 20px;
+    --font-lg: 36px;
+    --font-xl: 60px
 }
 
 body {
     background-color: var(--background-color);
     font-family: Arial, sans-serif;
+    color: #000000;
     text-align: center;
     align-items: center;
     padding: 0 20px;
-    color: #000000;
 }
 
-matrix {
-    margin-top: 10px;
-    align-content: center;
+h2 {
+    font-size: var(--font-xl);
+    color: var(--accent-color);
+    margin-bottom: var(--spacing-md);
+}
+
+.tabContent {
+    display: none;
+}
+
+.tabs button {
+    margin: var(--spacing-sm);
+    font-size: var(--font-md);
+}
+
+.rowColSelector {
+    font: var(--font-sm);
     display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+}
+
+.createButton {
+    margin: var(--spacing-sm);
+    justify-content: center;
+    align-items: center;
+}
+
+.matrix {
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    display: block;
 }
 
 .madeMatrices {
     display: flex;
-    gap: 20px;
+    gap: var(--spacing-xs);
     justify-content: center;
     align-items: center;
-    margin-top: 30px;
-}
-
-.matrix {
-    display: block;
 }
 
 input {
@@ -37,38 +73,18 @@ input {
 }
 
 #input {
-    font-size: 16px;
-}
-
-button {
-    margin-top: 10px;
-}
-
-h2 {
-    font-size: 64px;
-    color: var(--accent-color);
-    margin-bottom: 32px;
+    font-size: var(--font-sm);
 }
 
 .operator {
-    font-size: 32px;
+    font-size: var(--font-md);
 }
 
 .operatorButtons {
-    font-size: 40px;
-    margin: 0;
+    font-size: var(--font-md);
+    padding: var(--spacing-sm);
 }
 
 .result {
-    margin-top: 10px;
-}
-
-.tabContent {
-    display: none;
-    margin-top: 10px;
-}
-
-.tabs button {
-    margin: 10px;
-    font-size: 18px;
+    padding: var(--spacing-xs);
 }

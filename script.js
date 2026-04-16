@@ -14,7 +14,7 @@ function createMatrix(containerId, rows, cols) {
         for (let j = 0; j < cols; j++) {
             const input = document.createElement("input");
             input.type = "number";
-            input.placeholder = `a${i}${j}`;
+            input.placeholder = `A${i}${j}`;
             input.id = "input";
             input.style.width = "50px";
 
@@ -36,23 +36,89 @@ function setUpMatrices() {
 function getMatrixValues(matrixInputs) {
     return matrixInputs.map(row => row.map(input => Number(input.value)));
 }
-function printMatrix() {
-    console.log(getMatrixValues());
-}
+
 function setOperator(oper) {
     currentOperator = oper;
     document.getElementById("operator").textContent = oper;
 }
+
+function calculate() {
+    const A = getMatrixValues(matrixAInputs);
+    const B = getMatrixValues(matrixBInputs);
+    let result;
+
+    if (currentOperator == "+") {
+        result = addMatrices(A, B);
+    } else if (currentOperator == "-") {
+        result = subtractMatrices(A, B);
+    } else if (currentOperator == "X") {
+        result = multiplyMatrices(A, B);
+    }
+    displayMatrix(result);
+}
+
+function displayMatrix(matrix) {
+    const container = document.getElementById("doubleResult");
+    container.innerHTML = "";
+
+    matrix.forEach(row => {
+        let mtr = document.createElement("mtr");
+        row.forEach(val => {
+            const mtd = document.createElement("mtd");
+            mtd.textContent = val.toFixed(2);
+            mtd.style.margin = "10px";
+            mtr.appendChild(mtd);
+        });
+        container.appendChild(mtr);
+        container.appendChild(document.createElement("br"));
+    });
+}
+
+function displayResult(result) {
+    const container = document.getElementById("singleResult");
+    container.innerHTML = "";
+    const span = document.createElement("span");
+    span.textContent = result.toFixed(2);
+    span.style.margin = "15px";
+    container.appendChild(span);
+}
+
+function showTab(tab) {
+    document.getElementById("singleTab").style.display = "none";
+    document.getElementById("doubleTab").style.display = "none";
+
+    if (tab == "single") {
+        document.getElementById("singleTab").style.display = "block";
+        
+    } else {
+        document.getElementById("doubleTab").style.display = "block";
+    }
+}
+
+Module.onRuntimeInitialized = () => {
+    showTab('single');
+}
+
+
+/*          MATHEMATICAL OPERATIONS
+
+    This section holds the functions that perform
+    the calculations on the matrices
+
+*/
+
 function addMatrices(A, B) {
     return A.map((row, i) =>
         row.map((val, j) => val + B[i][j])
     );
 }
+
 function subtractMatrices(A, B) {
     return A.map((row, i) =>
         row.map((val, j) => val - B[i][j])
     );
 }
+
 function multiplyMatrices(A, B) {
     let result = [];
     for (let i = 0; i < A.length; i++) {
@@ -67,6 +133,7 @@ function multiplyMatrices(A, B) {
     }
     return result;
 }
+
 function determinant(matrix) {
     if (matrix.length > 2) {
         let matrixDeterminant = 0;
@@ -88,61 +155,11 @@ function determinant(matrix) {
         return matrix[0][0]*matrix[1][1] - matrix[1][0]*matrix[0][1];
     }
 }
+
 function trace(matrix) {
     let trace = 0;
     for (let i = 0; i < matrix.length; i++) {
         trace += matrix[i][i];
     }
     return trace;
-}
-function calculate() {
-    const A = getMatrixValues(matrixAInputs);
-    const B = getMatrixValues(matrixBInputs);
-    let result;
-
-    if (currentOperator == "+") {
-        result = addMatrices(A, B);
-    } else if (currentOperator == "-") {
-        result = subtractMatrices(A, B);
-    } else if (currentOperator == "X") {
-        result = multiplyMatrices(A, B);
-    }
-    displayMatrix(result);
-}
-function displayMatrix(matrix) {
-    const container = document.getElementById("doubleResult");
-    container.innerHTML = "";
-
-    matrix.forEach(row => {
-        let mtr = document.createElement("mtr");
-        row.forEach(val => {
-            const mtd = document.createElement("mtd");
-            mtd.textContent = val.toFixed(2);
-            mtd.style.margin = "10px";
-            mtr.appendChild(mtd);
-        });
-        container.appendChild(mtr);
-        container.appendChild(document.createElement("br"));
-    });
-}
-function displayResult(result) {
-    const container = document.getElementById("singleResult");
-    container.innerHTML = "";
-    const span = document.createElement("span");
-    span.textContent = result.toFixed(2);
-    span.style.margin = "15px";
-    container.appendChild(span);
-}
-function showTab(tab) {
-    document.getElementById("singleTab").style.display = "none";
-    document.getElementById("doubleTab").style.display = "none";
-
-    if (tab == "single") {
-        document.getElementById("singleTab").style.display = "block";
-    } else {
-        document.getElementById("doubleTab").style.display = "block";
-    }
-}
-Module.onRuntimeInitialized = () => {
-    showTab('single');
 }

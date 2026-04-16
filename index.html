@@ -12,14 +12,17 @@
 
         <div class="tabs">
             <button onclick="showTab('single')">Single Matrix</button>
-            <button onclick="showTab('double')">Two Matrices</button>
+            <button onclick="showTab('double')">Double Matrix</button>
         </div>
 
-        Rows: <input type="number" id="rows" value="2" min="1">
-        Cols: <input type="number" id="cols" value="2" min="1">
+        <div class="rowColSelector">
+            Rows: <input type="number" id="rows" value="2" min="1">
+            Cols: <input type="number" id="cols" value="2" min="1">
+        </div>
 
         <div id="singleTab" class="tabContent">
-            <button onclick="singleMatrixInputs = createMatrix('matrix', document.getElementById('rows').value, document.getElementById('cols').value)">
+            <button onclick="singleMatrixInputs = createMatrix('matrix', document.getElementById('rows').value, document.getElementById('cols').value)"
+            class="createButton">
                 Create Matrix</button>
 
             <div id="matrix" class="matrix"></div>
@@ -33,10 +36,11 @@
         </div>
 
         <div id="doubleTab" class="tabContent">
-            <button onclick="matrixAInputs = createMatrix('matrixA', document.getElementById('rows').value, document.getElementById('cols').value)">
-                Create First Matrix</button>
-            <button onclick="matrixBInputs = createMatrix('matrixB', document.getElementById('rows').value, document.getElementById('cols').value)">
-                Create Second Matrix</button>
+
+            <button onclick="matrixAInputs = createMatrix('matrixA', document.getElementById('rows').value, document.getElementById('cols').value)"
+            class="createButton">Create First Matrix</button>
+            <button onclick="matrixBInputs = createMatrix('matrixB', document.getElementById('rows').value, document.getElementById('cols').value)"
+            class="createButton">Create Second Matrix</button>
 
             <div class="madeMatrices">
                 <div id="matrixA" class="matrix"></div>
