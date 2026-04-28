@@ -85,6 +85,23 @@ input {
     padding: var(--spacing-sm);
 }
 
+.operatorButtons button {
+    font-size: var(--spacing-sm);
+}
+
+.powerContainer {
+    display: inline-flex;
+    position: relative;
+    align-items: center;
+    width: 10%;
+    gap: 0px;
+}
+
+.powerInput {
+    font-size: var(--spacing-sm);
+    margin: 0;
+}
+
 .result {
     padding: var(--spacing-xs);
 }

@@ -57,8 +57,8 @@ function calculate() {
     displayMatrix(result);
 }
 
-function displayMatrix(matrix) {
-    const container = document.getElementById("doubleResult");
+function displayMatrix(matrix, id="doubleMatrixResult") {
+    const container = document.getElementById(id);
     container.innerHTML = "";
 
     matrix.forEach(row => {
@@ -162,4 +162,12 @@ function trace(matrix) {
         trace += matrix[i][i];
     }
     return trace;
+}
+
+function power(matrix, exp) {
+    let result = matrix;
+    for (let i = 1; i < exp; i++) {
+        result = multiplyMatrices(result, matrix);
+    }
+    return result;
 }

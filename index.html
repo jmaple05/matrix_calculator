@@ -30,9 +30,22 @@
             <div class="operatorButtons">
                 <button onclick="displayResult(determinant(getMatrixValues(singleMatrixInputs)))">Determinant</button>
                 <button onclick="displayResult(trace(getMatrixValues(singleMatrixInputs)))">Trace</button>
+                <div class="powerContainer">
+                    <button class="powerButton" onclick="displayMatrix(power(getMatrixValues(singleMatrixInputs), document.getElementById('powerExp').value), 'singleMatrixResult')">
+                        Power: 
+                    </button>
+                    <input type="number" class="powerInput" id="powerExp" value="2" min="1">
+                </div>
             </div>
 
             <div id="singleResult"></div>
+            <math class="result">
+                <mrow>
+                    <mo>[</mo>
+                    <mtable id="singleMatrixResult" rowspacing="1em"></mtable>
+                    <mo>]</mo>
+                </mrow>
+            </math>
         </div>
 
         <div id="doubleTab" class="tabContent">
@@ -61,7 +74,7 @@
             <math class="result">
                 <mrow>
                     <mo>[</mo>
-                    <mtable id="doubleResult" rowspacing="1em"></mtable>
+                    <mtable id="doubleMatrixResult" rowspacing="1em"></mtable>
                     <mo>]</mo>
                 </mrow>
             </math>
