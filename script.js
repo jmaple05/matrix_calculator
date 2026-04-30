@@ -171,3 +171,30 @@ function power(matrix, exp) {
     }
     return result;
 }
+
+function inverse(matrix) {
+    const det = determinant(matrix);
+    if (det === 0) {
+        throw new Error("Matrix is singular and cannot be inverted.");
+    }
+    const n = matrix.length;
+    if (n === 2) {
+        let result = []
+        result[0] = [matrix[1][1], -matrix[0][1]];
+        result[1] = [-matrix[1][0], matrix[0][0]];
+        return result.map(row => row.map(val => val / det));
+    }
+}
+
+function rowReduce(matrix) {
+    let result = matrix;
+    for (let i = 1; i < matrix.length; i++) {
+        if (result[i][0] !== 0) {
+            let factor = result[i][0] / result[0][0];
+            for (let j = 0; j < result[i].length; j++) {
+                result[i][j] -= factor * result[0][j];
+            }
+        }
+    }
+    return result;
+}

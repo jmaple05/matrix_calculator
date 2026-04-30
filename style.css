@@ -83,6 +83,7 @@ input {
 .operatorButtons {
     font-size: var(--font-md);
     padding: var(--spacing-sm);
+    display: none;
 }
 
 .operatorButtons button {

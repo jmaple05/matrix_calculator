@@ -21,21 +21,41 @@
         </div>
 
         <div id="singleTab" class="tabContent">
-            <button onclick="singleMatrixInputs = createMatrix('matrix', document.getElementById('rows').value, document.getElementById('cols').value)"
+            <button onclick="singleMatrixInputs = createMatrix('matrix', document.getElementById('rows').value, document.getElementById('cols').value);
+            if (getElementById('rows').value != getElementById('cols').value) {
+                document.getElementById('determinantButton').style.display = 'none';
+                document.getElementById('traceButton').style.display = 'none';
+                document.getElementById('powerContainer').style.display = 'none';
+                document.getElementById('inverseButton').style.display = 'none';
+                document.getElementById('operationButtonBreak').style.display = 'none';
+                document.getElementById('singleResult').style.display = 'none';
+            } else {
+                document.getElementById('determinantButton').style.display = 'inline-block';
+                document.getElementById('traceButton').style.display = 'inline-block';
+                document.getElementById('powerContainer').style.display = 'inline-flex';
+                document.getElementById('inverseButton').style.display = 'inline-block';
+                document.getElementById('operationButtonBreak').style.display = 'block';
+                document.getElementById('singleResult').style.display = 'block';
+            }
+            document.getElementById('singleMatrixOperationButtons').style.display = 'block';"
             class="createButton">
                 Create Matrix</button>
 
             <div id="matrix" class="matrix"></div>
 
-            <div class="operatorButtons">
-                <button onclick="displayResult(determinant(getMatrixValues(singleMatrixInputs)))">Determinant</button>
-                <button onclick="displayResult(trace(getMatrixValues(singleMatrixInputs)))">Trace</button>
-                <div class="powerContainer">
+            <div class="operatorButtons" id="singleMatrixOperationButtons">
+                <button onclick="displayResult(determinant(getMatrixValues(singleMatrixInputs)))" id="determinantButton">Determinant</button>
+                <button onclick="displayResult(trace(getMatrixValues(singleMatrixInputs)))" id="traceButton">Trace</button>
+                <div class="powerContainer" id="powerContainer">
                     <button class="powerButton" onclick="displayMatrix(power(getMatrixValues(singleMatrixInputs), document.getElementById('powerExp').value), 'singleMatrixResult')">
                         Power: 
                     </button>
                     <input type="number" class="powerInput" id="powerExp" value="2" min="1">
                 </div>
+                <br id="operationButtonBreak">
+                <button onclick="displayMatrix(inverse(getMatrixValues(singleMatrixInputs)), 'singleMatrixResult')" id="inverseButton">Inverse</button>
+                <button onclick="displayMatrix(rowReduce(getMatrixValues(singleMatrixInputs)), 'singleMatrixResult')"
+                id="rowReduceButton">Row Reduce</button>
             </div>
 
             <div id="singleResult"></div>
@@ -61,7 +81,7 @@
                 <div id="matrixB" class="matrix"></div>
             </div>
 
-            <div class="operatorButtons">
+            <div class="operatorButtons" style="display: block;">
                 <button onclick="setOperator('+')">+</button>
                 <button onclick="setOperator('-')">-</button>
                 <button onclick="setOperator('X')">X</button>
