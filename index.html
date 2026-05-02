@@ -54,12 +54,12 @@
                 </div>
                 <br id="operationButtonBreak">
                 <button onclick="displayMatrix(inverse(getMatrixValues(singleMatrixInputs)), 'singleMatrixResult')" id="inverseButton">Inverse</button>
-                <button onclick="displayMatrix(rowReduce(getMatrixValues(singleMatrixInputs)), 'singleMatrixResult')"
-                id="rowReduceButton">Row Reduce</button>
+                <button onclick="displayMatrix(rowEchelon(getMatrixValues(singleMatrixInputs)), 'singleMatrixResult')" id="rowReduceButton">Row Echelon Form</button>
+                <button onclick="displayResult(rank(getMatrixValues(singleMatrixInputs)))" id="rankButton">Rank</button>
             </div>
 
             <div id="singleResult"></div>
-            <math class="result">
+            <math class="result" id="singleMatrixResultContainer">
                 <mrow>
                     <mo>[</mo>
                     <mtable id="singleMatrixResult" rowspacing="1em"></mtable>

@@ -60,7 +60,11 @@ function calculate() {
 function displayMatrix(matrix, id="doubleMatrixResult") {
     const container = document.getElementById(id);
     container.innerHTML = "";
-
+    if (id == "singleMatrixResult") {
+        singleMatrixContainer = document.getElementById("singleMatrixResultContainer");
+        singleMatrixContainer.style.display = "inline-block";
+    }
+    
     matrix.forEach(row => {
         let mtr = document.createElement("mtr");
         row.forEach(val => {
@@ -72,15 +76,21 @@ function displayMatrix(matrix, id="doubleMatrixResult") {
         container.appendChild(mtr);
         container.appendChild(document.createElement("br"));
     });
+
+    if (id == "singleMatrixResult") {
+        document.getElementById("singleResult").style.display = "none";
+    }
 }
 
 function displayResult(result) {
     const container = document.getElementById("singleResult");
     container.innerHTML = "";
+    container.style.display = "block";
     const span = document.createElement("span");
     span.textContent = result.toFixed(2);
     span.style.margin = "15px";
     container.appendChild(span);
+    document.getElementById("singleMatrixResultContainer").style.display = "none";
 }
 
 function showTab(tab) {
@@ -186,15 +196,39 @@ function inverse(matrix) {
     }
 }
 
-function rowReduce(matrix) {
+function rowEchelon(matrix) {
     let result = matrix;
-    for (let i = 1; i < matrix.length; i++) {
-        if (result[i][0] !== 0) {
-            let factor = result[i][0] / result[0][0];
-            for (let j = 0; j < result[i].length; j++) {
-                result[i][j] -= factor * result[0][j];
+    let factor = result[0][0];
+    for (let i = 0; i < result[0].length; i++) {
+        result[0][i] /= factor;
+    }
+    for (let i = 1; i < result.length; i++) {
+        factor = result[i][0];
+        for (let j = 0; j < result[i].length; j++) {
+            result[i][j] -= factor*result[0][j];
+        }
+    }
+    for (let i = 1; i < result.length; i++) {
+        for (let j = i; j < result[i].length; j++) { // find leading variable
+            if (result[i][j] !== 0) {
+                factor = result[i][j];
+                break
             }
+        }
+        for (let j = i; j < result[i].length; j++) {
+            result[i][j] /= factor;
         }
     }
     return result;
+}
+
+function rank(matrix) {
+    let rowReduced = rowEchelon(matrix);
+    let rank = 0;
+    for (let i = 0; i < rowReduced.length; i++) {
+        if (rowReduced[i].some(val => val !== 0)) {
+            rank++;
+        }
+    }
+    return rank;
 }
