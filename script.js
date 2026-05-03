@@ -208,6 +208,12 @@ function rowEchelon(matrix) {
             result[i][j] -= factor*result[0][j];
         }
     }
+    // for (let i = 1; i < result.length-1; i++) {
+    //     let rowReduced = rowEchelon(result.slice(i, result.length));
+    //     for (let j = 0; j < rowReduced.length; j++) {
+    //         result[i+j] = rowReduced[j];
+    //     }
+    // }
     for (let i = 1; i < result.length; i++) {
         for (let j = i; j < result[i].length; j++) { // find leading variable
             if (result[i][j] !== 0) {
@@ -217,6 +223,13 @@ function rowEchelon(matrix) {
         }
         for (let j = i; j < result[i].length; j++) {
             result[i][j] /= factor;
+        }
+    }
+    if (result.length > result[0].length) {
+        for (let i = result[0].length; i < result.length; i++) {
+            for (let j = 0; j < result[i].length; j++) {
+                result[i][j] = 0;
+            }
         }
     }
     return result;
@@ -231,4 +244,9 @@ function rank(matrix) {
         }
     }
     return rank;
+}
+
+function reducedRowEchelon(matrix) {
+    let result = rowEchelon(matrix);
+    
 }
